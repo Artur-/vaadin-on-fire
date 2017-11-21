@@ -7,4 +7,5 @@ To get started:
   * Select Java
   * Click "Generate new private key"
   * Store the download JSON file in src/main/resources/org/vaadin/artur/firebase/db/serviceAccount.json
+* Clone this project
 * Build and start the project using `mvn jetty:run`
