@@ -11,9 +11,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Link;
 import com.vaadin.ui.UIDetachedException;
 import com.vaadin.ui.VerticalLayout;
 
@@ -41,9 +43,13 @@ public class CrudView extends VerticalLayout {
             form.newItem();
         });
 
+        Link link = new Link("https://github.com/Artur-/vaadin-on-fire",
+                new ExternalResource(
+                        "https://github.com/Artur-/vaadin-on-fire"));
+        link.setTargetName("_blank");
         addComponents(new Label(
                 "This is a simple CRUD which uses Firebase and push to support multiple users simultaneously editing the same data"),
-                grid, newButton, form);
+                link, grid, newButton, form);
     }
 
     @Override
