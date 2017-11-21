@@ -1,6 +1,9 @@
 Example of using Vaadin and Firebase
 ==============
 
+Live demo at http://artur.app.fi/vaadin-on-fire/
+
+
 To get started:
 * Clone this project
 * Go to https://console.firebase.google.com/ and create a new project
