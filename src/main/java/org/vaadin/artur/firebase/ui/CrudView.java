@@ -36,7 +36,6 @@ public class CrudView extends VerticalLayout {
                 form.reset();
             }
         });
-        new UsersListener(UserDB.getUsersDb());
 
         newButton.addClickListener(e -> {
             form.newItem();
@@ -45,6 +44,12 @@ public class CrudView extends VerticalLayout {
         addComponents(new Label(
                 "This is a simple CRUD which uses Firebase and push to support multiple users simultaneously editing the same data"),
                 grid, newButton, form);
+    }
+
+    @Override
+    public void attach() {
+        super.attach();
+        new UsersListener(UserDB.getUsersDb());
     }
 
     private final class UsersListener implements ValueEventListener {
