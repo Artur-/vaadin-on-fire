@@ -10,8 +10,8 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 public class UserForm extends VerticalLayout {
-    private TextField name = new TextField();
-    private TextField age = new TextField();
+    private TextField name = new TextField("Name");
+    private TextField age = new TextField("Age");
     private Button save = new Button("Save");
     private int id;
     private Binder<User> binder;
@@ -50,6 +50,12 @@ public class UserForm extends VerticalLayout {
             UserDB.update(id, item);
         }
         setEnabled(false);
+    }
+
+    public void reset() {
+        setEnabled(false);
+        binder.setBean(new User());
+        id = -2;
     }
 
 }

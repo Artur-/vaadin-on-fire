@@ -13,6 +13,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.UIDetachedException;
 import com.vaadin.ui.VerticalLayout;
 
@@ -32,7 +33,7 @@ public class CrudView extends VerticalLayout {
             if (selected.isPresent()) {
                 form.setItem(gridItems.indexOf(selected.get()), selected.get());
             } else {
-                form.newItem();
+                form.reset();
             }
         });
         new UsersListener(UserDB.getUsersDb());
@@ -41,7 +42,9 @@ public class CrudView extends VerticalLayout {
             form.newItem();
         });
 
-        addComponents(grid, newButton, form);
+        addComponents(new Label(
+                "This is a simple CRUD which uses Firebase and push to support multiple users simultaneously editing the same data"),
+                grid, newButton, form);
     }
 
     private final class UsersListener implements ValueEventListener {
