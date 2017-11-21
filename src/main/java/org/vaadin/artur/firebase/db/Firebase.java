@@ -46,12 +46,11 @@ public class Firebase {
      * Creates some initial data if the database is empty
      */
     private static void maybeGenerateData() {
-        DatabaseReference usersDatabase = getDb().child("users");
-        usersDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+        getDb().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 // Wait for initial data before deciding to create or not
-                DataGenerator.maybeCreateInitialDb(usersDatabase);
+                UserDB.maybeCreateInitialData();
             }
 
             @Override
