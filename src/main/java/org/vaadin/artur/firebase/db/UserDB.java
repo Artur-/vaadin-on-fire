@@ -9,8 +9,10 @@ import com.google.firebase.database.DatabaseReference;
 
 public class UserDB {
 
+    private static final String DATABASE_NAMESPACE = "users";
+
     public static DatabaseReference getUsersDb() {
-        return Firebase.getDb().child("users3");
+        return Firebase.getDb().child(DATABASE_NAMESPACE);
     }
 
     public static void maybeCreateInitialData() {
