@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 
 import org.vaadin.artur.firebase.db.data.User;
 
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 
 public class UserDB {
@@ -15,7 +16,11 @@ public class UserDB {
         return Firebase.getDb().child(DATABASE_NAMESPACE);
     }
 
-    public static void maybeCreateInitialData() {
+    public static void maybeCreateInitialData(DataSnapshot snapshot) {
+        if (snapshot.hasChild(DATABASE_NAMESPACE)) {
+            return;
+        }
+
         add(new User("Foo", 12));
         add(new User("Bar", 56));
     }

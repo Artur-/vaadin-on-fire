@@ -50,7 +50,7 @@ public class Firebase {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 // Wait for initial data before deciding to create or not
-                UserDB.maybeCreateInitialData();
+                UserDB.maybeCreateInitialData(snapshot);
             }
 
             @Override
