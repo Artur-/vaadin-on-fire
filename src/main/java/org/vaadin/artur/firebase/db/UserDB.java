@@ -32,4 +32,12 @@ public class UserDB {
         toUpdate.put(key, item);
         getUsersDb().updateChildrenAsync(toUpdate);
     }
+
+    public static void delete(User item) {
+        getLogger().info("Delete user " + item);
+        HashMap<String, Object> toUpdate = new HashMap<>();
+        toUpdate.put(item.getKey(), null);
+        getUsersDb().updateChildrenAsync(toUpdate);
+
+    }
 }

@@ -2,7 +2,6 @@ package org.vaadin.artur.firebase;
 
 import java.util.LinkedHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Logger;
 import java.util.stream.Stream;
 
 import com.google.firebase.database.ChildEventListener;
@@ -30,16 +29,13 @@ public class FirebaseDataProvider<T extends HasKey>
     AtomicInteger registeredListeners = new AtomicInteger(0);
 
     /**
-     * Constructs a new ListDataProvider.
-     * <p>
-     * No protective copy is made of the list, and changes in the provided
-     * backing Collection will be visible via this data provider. The caller
-     * should copy the list if necessary.
+     * Constructs a new Firebase data provider connected to the given database
+     * reference.
      *
+     * @param type
+     *            the entity type to use for items
      * @param databaseReference
-     *
-     * @param items
-     *            the initial data, not null
+     *            the reference containing the child nodes to include
      */
     public FirebaseDataProvider(Class<T> type,
             DatabaseReference databaseReference) {
@@ -90,10 +86,6 @@ public class FirebaseDataProvider<T extends HasKey>
         databaseReference.removeEventListener(this);
     }
 
-    private Logger getLogger() {
-        return Logger.getLogger(FirebaseDataProvider.class.getName());
-    }
-
     @Override
     public void onChildAdded(DataSnapshot snapshot, String previousChildName) {
         T added = snapshot.getValue(type);
@@ -117,7 +109,8 @@ public class FirebaseDataProvider<T extends HasKey>
 
     @Override
     public void onChildRemoved(DataSnapshot snapshot) {
-
+        data.remove(snapshot.getKey());
+        refreshAll();
     }
 
     @Override
