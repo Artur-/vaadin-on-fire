@@ -1,6 +1,8 @@
 package org.vaadin.artur.firebase;
 
 import java.util.LinkedHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Logger;
 import java.util.stream.Stream;
 
 import com.google.firebase.database.ChildEventListener;
@@ -8,8 +10,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.vaadin.data.provider.AbstractDataProvider;
+import com.vaadin.data.provider.DataProviderListener;
 import com.vaadin.data.provider.Query;
 import com.vaadin.server.SerializablePredicate;
+import com.vaadin.shared.Registration;
 
 /**
  * A data provider connected to a given child in a Firebase database.
@@ -23,6 +27,7 @@ public class FirebaseDataProvider<T extends HasKey>
     private LinkedHashMap<String, T> data = new LinkedHashMap<>();
     private DatabaseReference databaseReference;
     private Class<T> type;
+    AtomicInteger registeredListeners = new AtomicInteger(0);
 
     /**
      * Constructs a new ListDataProvider.
@@ -40,7 +45,6 @@ public class FirebaseDataProvider<T extends HasKey>
             DatabaseReference databaseReference) {
         this.databaseReference = databaseReference;
         this.type = type;
-        registerFirebaseListener();
     }
 
     @Override
@@ -63,12 +67,31 @@ public class FirebaseDataProvider<T extends HasKey>
         return false;
     }
 
+    @Override
+    public Registration addDataProviderListener(
+            DataProviderListener<T> listener) {
+        if (registeredListeners.incrementAndGet() == 1) {
+            registerFirebaseListener();
+        }
+        Registration realRegistration = super.addDataProviderListener(listener);
+        return () -> {
+            realRegistration.remove();
+            if (registeredListeners.decrementAndGet() == 0) {
+                unregisterFirebaseListener();
+            }
+        };
+    }
+
     private void registerFirebaseListener() {
         databaseReference.addChildEventListener(this);
     }
 
     private void unregisterFirebaseListener() {
         databaseReference.removeEventListener(this);
+    }
+
+    private Logger getLogger() {
+        return Logger.getLogger(FirebaseDataProvider.class.getName());
     }
 
     @Override
