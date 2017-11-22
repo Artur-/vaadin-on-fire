@@ -10,7 +10,7 @@ import com.google.firebase.database.DatabaseReference;
 public class UserDB {
 
     public static DatabaseReference getUsersDb() {
-        return Firebase.getDb().child("users2");
+        return Firebase.getDb().child("users3");
     }
 
     public static void maybeCreateInitialData() {
