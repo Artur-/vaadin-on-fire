@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import javax.servlet.annotation.WebServlet;
 
 import org.vaadin.artur.firebase.db.Firebase;
+import org.vaadin.artur.firebase.ui.crud.CrudView;
 
 import com.vaadin.annotations.Push;
 import com.vaadin.annotations.VaadinServletConfiguration;

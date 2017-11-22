@@ -1,4 +1,4 @@
-package org.vaadin.artur.firebase.ui;
+package org.vaadin.artur.firebase.ui.crud;
 
 import org.vaadin.artur.firebase.db.UserDB;
 import org.vaadin.artur.firebase.db.data.User;

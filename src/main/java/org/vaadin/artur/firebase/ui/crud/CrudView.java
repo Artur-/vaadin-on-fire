@@ -1,4 +1,4 @@
-package org.vaadin.artur.firebase.ui;
+package org.vaadin.artur.firebase.ui.crud;
 
 import java.util.Optional;
 
