@@ -13,7 +13,7 @@ public class UserForm extends VerticalLayout {
     private TextField name = new TextField("Name");
     private TextField age = new TextField("Age");
     private Button save = new Button("Save");
-    private int id;
+    private String key;
     private Binder<User> binder;
 
     public UserForm() {
@@ -32,11 +32,11 @@ public class UserForm extends VerticalLayout {
     }
 
     public void newItem() {
-        setItem(-1, new User("", 0));
+        setItem(null, new User("", 0));
     }
 
-    public void setItem(int id, User user) {
-        this.id = id;
+    public void setItem(String key, User user) {
+        this.key = key;
         binder.setBean(user);
         setEnabled(true);
         name.focus();
@@ -44,10 +44,10 @@ public class UserForm extends VerticalLayout {
 
     private void saveItem() {
         User item = binder.getBean();
-        if (id == -1) {
+        if (key == null) {
             UserDB.add(item);
         } else {
-            UserDB.update(id, item);
+            UserDB.update(key, item);
         }
         setEnabled(false);
     }
@@ -55,7 +55,7 @@ public class UserForm extends VerticalLayout {
     public void reset() {
         setEnabled(false);
         binder.setBean(new User());
-        id = -2;
+        key = null;
     }
 
 }
